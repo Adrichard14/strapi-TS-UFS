@@ -5,7 +5,10 @@
  * @param {Array<Action>} actions - array of actions
  * @returns {Object} "{ contentTypes, plugins, settings }"
  */
-const formatActionsBySections = (actions) =>
+const formatActionsBySections = (actions) => {
+  if (typeof (actions) !== 'object') {
+    return false;
+  }
   actions.reduce((result, p) => {
     const checkboxItem = {
       displayName: p.displayName,
@@ -36,5 +39,6 @@ const formatActionsBySections = (actions) =>
 
     return result;
   }, {});
+}
 
 module.exports = formatActionsBySections;

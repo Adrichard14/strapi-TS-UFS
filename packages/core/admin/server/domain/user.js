@@ -16,6 +16,9 @@ function createUser(attributes) {
 }
 
 const hasSuperAdminRole = (user) => {
+  if (!user.roles || user.roles.length < 1) {
+    throw new Error('The given user has no attribute role')
+  }
   return user.roles.filter((role) => role.code === SUPER_ADMIN_CODE).length > 0;
 };
 

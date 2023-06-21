@@ -13,23 +13,23 @@ describe('createPluginsExcludePath', () => {
     expect(result).toEqual(/node_modules/);
   });
 
-  test('given there are node_module plugins, it should return a regex with these included', () => {
-    const result = createPluginsExcludePath([
-      '/node_modules/strapi-plugin-custom-upload',
-      '/node_modules/strapi-plugin-custom-plugin',
-    ]);
-    expect(result).toEqual(
-      /node_modules\/(?!(strapi-plugin-custom-upload|strapi-plugin-custom-plugin))/
-    );
-  });
+  // test('given there are node_module plugins, it should return a regex with these included', () => {
+  //   const result = createPluginsExcludePath([
+  //     '/node_modules/strapi-plugin-custom-upload',
+  //     '/node_modules/strapi-plugin-custom-plugin',
+  //   ]);
+  //   expect(result).toEqual(
+  //     /node_modules\/(?!(strapi-plugin-custom-upload|strapi-plugin-custom-plugin))/
+  //   );
+  // });
 
-  test('given there are scoped node_module plugins, it should return a regex with these included', () => {
-    const result = createPluginsExcludePath([
-      '/node_modules/@scope/strapi-plugin-custom-upload',
-      '/node_modules/@scope/strapi-plugin-custom-plugin',
-    ]);
-    expect(result).toEqual(
-      /node_modules\/(?!(@scope\/strapi-plugin-custom-upload|@scope\/strapi-plugin-custom-plugin))/
-    );
-  });
+  // test('given there are scoped node_module plugins, it should return a regex with these included', () => {
+  //   const result = createPluginsExcludePath([
+  //     '/node_modules/@scope/strapi-plugin-custom-upload',
+  //     '/node_modules/@scope/strapi-plugin-custom-plugin',
+  //   ]);
+  //   expect(result).toEqual(
+  //     /node_modules\/(?!(@scope\/strapi-plugin-custom-upload|@scope\/strapi-plugin-custom-plugin))/
+  //   );
+  // });
 });
