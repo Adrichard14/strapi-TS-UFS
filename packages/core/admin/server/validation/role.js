@@ -1,6 +1,7 @@
 'use strict';
 
 const { yup, validateYupSchema } = require('@strapi/utils');
+const roleService = require('../services/role')
 
 const roleCreateSchema = yup
   .object()
@@ -35,7 +36,7 @@ const roleDeleteSchema = yup
   .required()
   .test('no-admin-single-delete', 'Role deletion checks have failed', async function (id) {
     try {
-      await strapi.admin.services.role.checkRolesIdForDeletion([id]);
+      await roleService.checkRolesIdForDeletion([id]);
     } catch (e) {
       return this.createError({ path: 'id', message: e.message });
     }

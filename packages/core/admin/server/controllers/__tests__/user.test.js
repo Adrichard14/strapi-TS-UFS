@@ -320,22 +320,5 @@ describe('User Controller', () => {
       expect(sanitizeUser).toHaveBeenCalled();
       expect(ctx.body).toStrictEqual({ data: { ...user, ...body } });
     });
-
-    test('Already exists user with the email', async () => {
-      const body = { email: 'adrichard14@hotmail.com' };
-
-      const ctx = createContext({ params: { id: user.id }, body });
-      const spy = jest.spyOn(userController, 'update');
-      spy.mockReturnValueOnce(new ApplicationError('A user with this email address already exists'));
-      try {
-        await userController.update(ctx);
-      } catch (e) {
-        expect(e instanceof ApplicationError).toBe(true);
-        expect(e.message).toEqual(
-          'A user with this email address already exists'
-        );
-      }
-    });
-
   });
 });

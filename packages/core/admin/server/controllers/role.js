@@ -10,6 +10,7 @@ const {
 const { validatedUpdatePermissionsInput } = require('../validation/permission');
 const { SUPER_ADMIN_CODE } = require('../services/constants');
 const { getService } = require('../utils');
+const { sanitizeRole } = require('../services/role')
 
 module.exports = {
   /**
@@ -22,7 +23,7 @@ module.exports = {
     const roleService = getService('role');
 
     const role = await roleService.create(ctx.request.body);
-    const sanitizedRole = roleService.sanitizeRole(role);
+    const sanitizedRole = sanitizeRole(role);
 
     ctx.created({ data: sanitizedRole });
   },
