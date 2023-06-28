@@ -30,7 +30,8 @@
     "build": "rimraf build && node ./scripts/build.js",
     "build:measure": "rimraf build && cross-env MEASURE_BUILD_SPEED=true node ./scripts/build.js",
     "test": "echo \"no tests yet\"",
-    "test:unit": "run -T jest",
+    "test:unit": "run -T jest --coverage",
+    "test:custom": "jest --watch --testPathPattern=__tests__custom__",
     "test:unit:watch": "run -T jest --watch",
     "test:front": "run -T cross-env IS_EE=true jest --config ./jest.config.front.js",
     "test:front:watch": "run -T cross-env IS_EE=true jest --config ./jest.config.front.js --watchAll",
@@ -144,6 +145,7 @@
     "duplicate-dependencies-webpack-plugin": "^1.0.2",
     "glob": "8.0.3",
     "msw": "1.2.1",
+    "nyc": "15.1.0",
     "speed-measure-webpack-plugin": "1.5.0",
     "webpack-bundle-analyzer": "^4.8.0"
   },
