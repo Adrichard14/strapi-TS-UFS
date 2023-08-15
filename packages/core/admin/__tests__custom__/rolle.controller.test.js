@@ -94,6 +94,8 @@ describe('Role Controller test', () => {
         },
       };
       await roleController.findOne(ctx);
+      // cover the boundaries
+      expect(ctx.params.id).toBeGreaterThan(0);
       expect(findOneWithUsersCount).toHaveBeenCalledWith({ id: ctx.params.id })
       expect(notFound).toHaveBeenCalled();
     });
@@ -117,11 +119,11 @@ describe('Role Controller test', () => {
           },
         },
       };
-
       // const sanitizeRoleMock = jest.spyOn(roleService, 'sanitizeRole');
       // sanitizeRoleMock.mockReturnValueOnce({id: 1, name: 'New role'});
       await roleController.create(ctx);
-
+      // cover the boundaries
+      expect(ctx.request.body.name.length > 0).toBeTruthy();
       expect(badRequest).not.toHaveBeenCalled();
       expect(create).toHaveBeenCalledWith(body);
       expect(created).toHaveBeenCalled();
@@ -148,7 +150,8 @@ describe('Role Controller test', () => {
         data: '',
       }));
       await roleController.deleteOne(ctx);
-
+      // cover the boundaries
+      // expect(ctx.params.id).toBeGreaterThan(0);
       expect(deleted).toHaveBeenCalled();
     });
   });

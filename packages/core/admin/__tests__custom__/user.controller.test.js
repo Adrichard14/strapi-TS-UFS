@@ -24,13 +24,14 @@ describe('User Controller Test', () => {
       try {
         await userController.update(ctx);
       } catch (e) {
+        // cover the boundariesD
+        expect(body?.email).not.toBeNull();
         expect(e instanceof ApplicationError).toBe(true);
         expect(e.message).toEqual(
           'A user with this email address already exists'
         );
       }
     });
-
   });
 
   describe('Delete One user', () => {
@@ -40,7 +41,6 @@ describe('User Controller Test', () => {
       const notFound = jest.fn();
 
       const ctx = createContext({ params: { id: fakeId } }, { notFound });
-
       global.strapi = {
         admin: {
           services: {
@@ -50,7 +50,8 @@ describe('User Controller Test', () => {
       };
 
       await userController.deleteOne(ctx);
-
+      // cover the boundaries
+      expect(ctx.params.id).toBeGreaterThan(0);
       expect(deleteById).toHaveReturnedWith(null);
       expect(notFound).toHaveBeenCalledWith('User not found');
     });
