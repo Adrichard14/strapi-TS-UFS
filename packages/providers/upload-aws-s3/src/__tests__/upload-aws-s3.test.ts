@@ -142,5 +142,34 @@ describe('AWS-S3 provider', () => {
       expect(file.url).toBeDefined();
       expect(file.url).toEqual('https://cdn.test/dir/dir2/tmp/test/test.json');
     });
+
+    test('Should return an error if the file buffer is missing', async () => {
+      const providerInstance = awsProvider.init({
+        s3Options: {
+          params: {
+            Bucket: 'test',
+          },
+        },
+      });
+
+      S3InstanceMock.upload.mockImplementationOnce((params, callback) =>
+        callback(null, { Location: 'https://validurl.test/tmp/test2.json' })
+      );
+
+      const file: File = {
+        name: 'test2',
+        size: 100,
+        url: '',
+        path: 'tmp',
+        hash: 'test2',
+        ext: '.json',
+        mime: 'application/json',
+      };
+      try {
+        await providerInstance.upload(file);
+      } catch (error) {
+        expect(error).toHaveProperty('message', 'Missing file stream or buffer');
+      }
+    });
   });
 });

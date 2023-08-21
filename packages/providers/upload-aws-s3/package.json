@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.1399.0",
+    "jest": "29.6.2",
     "lodash": "4.17.21"
   },
   "devDependencies": {

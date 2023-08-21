@@ -43,5 +43,51 @@ describe('Local provider', () => {
       expect(file.url).toBeDefined();
       expect(file.url).toEqual('/uploads/test.json');
     });
+
+    test('Should throw an error no buffer is provided', async () => {
+      const providerInstance = localProvider.init({});
+
+      const file: File = {
+        name: 'test2',
+        size: 100,
+        url: '/',
+        path: '/tmp/',
+        hash: 'test2',
+        ext: '.json',
+        mime: 'application/json',
+        // buffer: Buffer.from(''),
+      };
+
+      try {
+        await providerInstance.upload(file);
+      } catch (error) {
+        expect(error).toHaveProperty('message', 'Missing file buffer');
+      }
+    });
+
+    test('Should return an exception if the file to be deleted does not exists', async () => {
+      const providerInstance = localProvider.init({});
+
+      const existsSyncSpy = jest.spyOn(providerInstance, 'delete');
+
+      const file: File = {
+        name: 'test2',
+        size: 100,
+        url: '/',
+        path: '/tmp/',
+        hash: 'test2',
+        ext: '.json',
+        mime: 'application/json',
+        buffer: Buffer.from(''),
+      };
+
+      existsSyncSpy.mockResolvedValue("File doesn't exist");
+
+      try {
+        await providerInstance.delete(file);
+      } catch (error) {
+        expect(error).toHaveProperty('message', "File doesn't exist");
+      }
+    });
   });
 });

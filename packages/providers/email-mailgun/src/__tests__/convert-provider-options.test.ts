@@ -86,5 +86,20 @@ describe('@strapi/provider-email-mailgun', () => {
         mailgun.client({ ...defaults, ...provider.convertProviderOptions(providerOptions) });
       }).toThrowError('Parameter "key" is required');
     });
+
+    it('fails to create a new Mailgun client due to missing username', () => {
+      const defaults = {
+        username: 'api',
+      } as Options;
+
+      const providerOptions = {
+        username: '',
+        domain: 'baz.example.com',
+      };
+      const mailgun = new Mailgun(formData);
+      expect(() => {
+        mailgun.client({ ...defaults, ...provider.convertProviderOptions(providerOptions) });
+      }).toThrowError('Parameter "username" is required');
+    });
   });
 });
